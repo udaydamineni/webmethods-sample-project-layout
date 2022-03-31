@@ -1,0 +1,22 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/python']], extensions: [], userRemoteConfigs: [[credentialsId: '596e7615-9787-44db-9137-4f4a754ff975', url: 'https://github.com/udaydamineni/webmethods-sample-project-layout.git']]])
+            }
+        }
+        stage('Build') {
+            steps {
+                git branch: 'python', credentialsId: '596e7615-9787-44db-9137-4f4a754ff975', url: 'https://github.com/udaydamineni/webmethods-sample-project-layout.git'
+                sh 'python3 JoinTwoStrings.py'
+            }
+        } 
+    stage('Test') {
+            steps {
+                echo 'the test was success'
+            }
+        } 
+    }
+}
